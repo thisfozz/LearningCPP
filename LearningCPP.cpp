@@ -23,7 +23,6 @@ public:
         return dd + "." + mm + "." + yyyy;
     }
 };
-
 class StudentTwo {
 private:
     std::string name;
@@ -71,10 +70,8 @@ public:
     StudentTwo() {}
 
     StudentTwo(std::string name, std::string surname, int age, const Date& dateOfBirth, const std::string& phoneNumber)
-        : name(name), surname(surname), age(age), date(dateOfBirth), phoneNumber(phoneNumber) {
-    }
+        : name(name), surname(surname), age(age), date(dateOfBirth), phoneNumber(phoneNumber) {}
 };
-
 
 class Dot {
 private:
@@ -83,6 +80,16 @@ private:
     int z = 0;
 
 public:
+
+    Dot() {}
+
+    Dot(int x, int y, int z)
+    {
+        this->x = x;
+        this->y = y;
+        this->z = z;
+    }
+
     void setX(const int& x) {
         this->x = x;
     }
@@ -110,6 +117,62 @@ public:
         else {
             std::cout << "Error";
         }
+    }
+
+    inline double calculateDistance(Dot& dotOther) {
+        if (this->x == 0 && this ->y == 0 && this ->z == 0) {
+            std::cout << "Error: Current Dot has zero coordinates.\n";
+            return -1.0;
+        }
+        if (dotOther.x == 0 && dotOther.y == 0 && dotOther.z == 0) {
+            std::cout << "Error: Other Dot has zero coordinates.\n";
+            return -1.0;
+        }
+
+        int dx = this->x - dotOther.getX();
+        int dy = this->y - dotOther.getY();
+        int dz = this->z - dotOther.getZ();
+
+        return std::sqrt(dx * dx + dy * dy + dz * dz);
+    }
+};
+
+class NNTName {
+private:
+    int valueOne;
+    int valueTwo;
+
+public:
+    void SetValueOne(const int& valueOne) {
+        this->valueOne = valueOne;
+    }
+    int GetValueOne() {
+        if (valueOne != NULL) {
+            return valueOne;
+        }
+        return 0;
+    }
+
+    void SetValueTwo(const int& valueTwo) {
+        this->valueTwo = valueTwo;
+    }
+    int GetValueTwo() {
+        if (valueTwo != NULL) {
+            return valueTwo;
+        }
+        return 0 ;
+    }
+
+    int Sum() {
+        if (valueOne != NULL && valueTwo != NULL) {
+            return valueOne + valueTwo;
+        }
+    }
+    int MaxValue() {
+    }
+
+    int minValue() {
+        return std::min(valueOne, valueTwo);
     }
 };
 
@@ -189,13 +252,20 @@ public:
 
         dot.saveFile();
     }
+
+    void task3() {
+        NNTName n;
+        n.SetValueOne(5);
+        n.SetValueTwo(10);
+
+        std::cout << n.MaxValue();
+    }
 };
-
-
 
 int main() {
     Task task;
     //task.task1();
-    task.task2();
+    //task.task2();
+    task.task3();
 }
 
