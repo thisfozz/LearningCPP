@@ -253,6 +253,7 @@ public:
             break;
         }
     }
+    ~Group() {};
 private:
     void AddStudent() {
         system("cls");
@@ -316,6 +317,57 @@ private:
     }
 protected:
     std::vector<Student> groupStudents;
+};
+
+class Array {
+private:
+    int index;
+    int* _currentArray;
+    int _size;
+
+public:
+    Array(const int& size)  {
+        _size = size;
+        index = 0;
+        _currentArray = new int[_size];
+        for (int i = 0; i < size; i++)
+        {
+            _currentArray[i] = {};
+        }
+    }
+    void SetValue(const int& value) {
+        _currentArray[index] = value;
+        index++;
+    }
+    void Random() {
+        srand(time(NULL));
+        for (int i = 0; i < _size; i++)
+        {
+            _currentArray[i] = 1 + rand() % 10;
+        }
+    }
+
+    void PrintArray() {
+        for (int i = 0; i < _size; i++)
+        {
+            cout << _currentArray[i] << endl;
+        }
+    }
+
+    void Scramble() {
+        for (int i = 0; i < _size; i++)
+        {
+            _currentArray[0 + rand() % _size - 1] = _currentArray[i];
+        }
+    }
+
+    int ArraySize() {
+        return _size;
+    }
+
+    void ClearArrayMemory() {
+        delete[] _currentArray;
+    }
 };
 
 class Task {
@@ -407,13 +459,19 @@ public:
         groupStudent.Menu();
 
     }
+    void task5() {
+        Array newArray(10);
+        newArray.Random();
+        newArray.PrintArray();
+    }
 };
+
 
 int main() {
     Task task;
     //task.task1();
     //task.task2();
     //task.task3();
-    task.task4();
+    //task.task5();
 }
 
