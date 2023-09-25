@@ -193,9 +193,7 @@ protected:
 
 class Student : public People {
 public:
-
     Student() {}
-
     Student(const std::string& name, const std::string& surname, int age, const std::string& gender, int numberGroup)
     {
         setName(name);
@@ -205,45 +203,18 @@ public:
         setNumberGroup(numberGroup);
     }
 
-    virtual void setName(const std::string& Name) override
-    {
-        this->Name = Name;
-    }
-    virtual void setSurname(const std::string& Surname) override
-    {
-        this->Surname = Surname;
-    }
-    virtual void setAge(const int Age) override
-    {
-        this->Age = Age;
-    }
-    virtual void setGender(const std::string& Gender) override
-    {
-        this->Gender = Gender;
-    }
-    virtual std::string getName() override
-    {
-        return Name;
-    }
-    virtual std::string getSurname() override
-    {
-        return Surname;
-    }
-    virtual int getAge() override
-    {
-        return Age;
-    }
-    virtual std::string getGender() override
-    {
-        return Gender;
-    }
+public:
+    virtual void setName(const std::string& Name) override { this->Name = Name; }
+    virtual void setSurname(const std::string& Surname) override { this->Surname = Surname; }
+    virtual void setAge(const int Age) override { this->Age = Age; }
+    void setNumberGroup(const int numberGroup) { NumberGroup = numberGroup; }
+    virtual void setGender(const std::string& Gender) override { this->Gender = Gender; }
 
-    void setNumberGroup(const int numberGroup) {
-        NumberGroup = numberGroup;
-    }
-    int getNumberGroup() {
-        return NumberGroup;
-    }
+    virtual std::string getName() override { return Name; }
+    virtual std::string getSurname() override { return Surname; }
+    virtual int getAge() override { return Age;}
+    virtual std::string getGender() override { return  Gender; }
+    int getNumberGroup() { return NumberGroup; }
 
 private:
     int AverageRating;
@@ -252,11 +223,10 @@ private:
 
 class Group {
 public:
-
     Group() {}
-
     Group(const std::vector<Student>& initialStudents) : groupStudents(initialStudents) {}
 
+public:
     void Menu() {
         system("cls");
         char choice;
@@ -313,7 +283,6 @@ private:
         system("cls");
         Menu();
     }
-
     void PrintStudents() {
         system("cls");
         for (size_t i = 0; i < groupStudents.size(); i++) {
