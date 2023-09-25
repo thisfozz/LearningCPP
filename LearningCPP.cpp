@@ -129,11 +129,8 @@ public:
             return -1.0;
         }
 
-        int dx = this->x - dotOther.getX();
-        int dy = this->y - dotOther.getY();
-        int dz = this->z - dotOther.getZ();
-
-        return std::sqrt(dx * dx + dy * dy + dz * dz);
+        // Вычисление Евклидового расстояния между точками в пространстве
+        return std::sqrt(std::pow(dotOther.getX() - this->x, 2) + std::pow(dotOther.getY() - this->y, 2) + std::pow(dotOther.getZ() - this->z, 2));
     }
 };
 
