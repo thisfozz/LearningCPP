@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <fstream>
+#include <map>
 
 using namespace std;
 
@@ -190,7 +191,6 @@ protected:
     int Age;
     std::string Gender;
 };
-
 class Student : public People {
 public:
     Student() {}
@@ -220,7 +220,6 @@ private:
     int AverageRating;
     int NumberGroup;
 };
-
 class Group {
 public:
     Group() {}
@@ -318,7 +317,6 @@ private:
 protected:
     std::vector<Student> groupStudents;
 };
-
 class Array {
 private:
     int index;
@@ -367,6 +365,109 @@ public:
 
     void ClearArrayMemory() {
         delete[] _currentArray;
+    }
+};
+class Elevator {
+public:
+    Elevator()
+    {
+        currentFloor = 1;
+        powerElevator = true;
+        elevator[1] = "1st floor";
+        elevator[2] = "2st floor";
+        elevator[3] = "3st floor";
+        elevator[4] = "4st floor";
+        elevator[5] = "5st floor";
+        elevator[6] = "6st floor";
+        elevator[7] = "7st floor";
+        elevator[8] = "8st floor";
+    }
+
+    void MovementButton(const int& floor) {
+        if (!powerElevator) {
+            std::cout << "The elevator is not included";
+            return;
+        }
+
+        if (elevator.find(floor) != elevator.end()) {
+            std::cout << "Moving to " << elevator[floor] << std::endl;
+            currentFloor = floor;
+        }
+        else std::cout << "Invalid floor requested" << std::endl;
+    }
+    void ElevatorPowerManagement(const bool power) {
+        if (power != powerElevator)
+            powerElevator = power;
+
+        return;
+    }
+    bool getStatusPowerElevator() {
+        return powerElevator;
+    }
+    int getStatusFloorElevator() {
+
+        return currentFloor;
+    }
+private:
+    std::map<int, string> elevator;
+    bool powerElevator;
+    int currentFloor;
+};
+class Counter {
+public:
+    Counter() : _counter(0) {}
+
+    Counter(const int counterStart) : _counter(counterStart) {}
+
+    void CounterManager() {
+        int value;
+        short choice = 0;
+        bool isContinue = false;
+        do {
+            std::cout << "1. " << "Increase by one" << std::endl;
+            std::cout << "\n2. " << "Increase by value" << std::endl;
+
+            std::cin >> choice;
+
+            switch (choice)
+            {
+            case 1:
+                ++_counter;
+                PrintValue();
+                std::cout << "\nIsContinue?";
+                std::cin >> isContinue;
+                break;
+            case 2:
+                std::cout << "Enter a number: ";
+                std::cin >> value;
+                _counter += value;
+                PrintValue();
+                std::cout << "\nIsContinue?";
+                std::cin >> isContinue;
+                break;
+            default:
+                break;
+            }
+        } while (isContinue);
+    }
+
+private:
+    int _counter;
+
+    Counter operator ++ ()
+    {
+        _counter + 1;
+        return *this;
+    }
+
+    Counter operator += (int value)
+    {
+        _counter + value;
+        return *this;
+    }
+
+    void PrintValue() {
+        std::cout << "Value = " << _counter << std::endl;
     }
 };
 
@@ -464,6 +565,10 @@ public:
         newArray.Random();
         newArray.PrintArray();
     }
+    void task6() {
+        Counter counter;
+        counter.CounterManager();
+    }
 };
 
 
@@ -473,5 +578,6 @@ int main() {
     //task.task2();
     //task.task3();
     //task.task5();
+    //task.task6();
 }
 
