@@ -25,55 +25,7 @@ public:
         return dd + "." + mm + "." + yyyy;
     }
 };
-class StudentTwo {
-private:
-    std::string name;
-    std::string surname;
-    int age;
-    Date date;
-    string phoneNumber;
-public:
-    void setName(const std::string& name) {
-        this->name = name;
-    }
-    std::string getName() const {
-        return name;
-    }
 
-    void setSurname(const std::string& surname) {
-        this->surname = surname;
-    }
-    std::string getSurname() const {
-        return surname;
-    }
-
-    void setAge(const int& age) {
-        this->age = age;
-    }
-    int getAge() const {
-        return age;
-    }
-
-    void setDate(const Date& dateOfBirth) {
-        this->date = dateOfBirth;
-    }
-
-    Date getDateOfBirth() const {
-        return date;
-    }
-    void setPhoneNumber(const std::string& phoneNumber) {
-        this->phoneNumber = phoneNumber;
-    }
-    std::string getPhoneNumber() const {
-        return phoneNumber;
-    }
-
-
-    StudentTwo() {}
-
-    StudentTwo(std::string name, std::string surname, int age, const Date& dateOfBirth, const std::string& phoneNumber)
-        : name(name), surname(surname), age(age), date(dateOfBirth), phoneNumber(phoneNumber) {}
-};
 class Dot {
 private:
     int x = 0;
@@ -134,6 +86,7 @@ public:
         return std::sqrt(std::pow(dotOther.getX() - this->x, 2) + std::pow(dotOther.getY() - this->y, 2) + std::pow(dotOther.getZ() - this->z, 2));
     }
 };
+
 class NNTName {
 private:
     int valueOne;
@@ -172,6 +125,7 @@ public:
         return std::min(valueOne, valueTwo);
     }
 };
+
 class People {
 public:
     virtual ~People() {}
@@ -318,6 +272,7 @@ private:
 protected:
     std::vector<Student> groupStudents;
 };
+
 class Array {
 private:
     int index;
@@ -368,6 +323,7 @@ public:
         delete[] _currentArray;
     }
 };
+
 class Elevator {
 public:
     Elevator()
@@ -414,6 +370,7 @@ private:
     bool powerElevator;
     int currentFloor;
 };
+
 class Counter {
 public:
     Counter() : _counter(0) {}
@@ -471,6 +428,7 @@ private:
         std::cout << "Value = " << _counter << std::endl;
     }
 };
+
 class WallpaperRollType {
 private:
     string wallpaperType;
@@ -571,125 +529,6 @@ public:
         return getAllCostOfGluing() * countRoom;
     }
 };
-class Task {
-public:
-    void task1() {
-        std::vector<StudentTwo> studentsTwo;
-
-        std::cout << "How many students would you like to have? ";
-        int count = 0;
-        std::cin >> count;
-        std::cin.ignore();
-
-        for (int i = 0; i < count; i++) {
-            std::string name;
-            std::cout << "Enter the name of student " << i + 1 << ": ";
-            std::getline(std::cin, name);
-
-            string surname;
-            std::cout << "Enter the surname of student " << i + 1 << ": ";
-            std::getline(std::cin, surname);
-
-            int age = 0;
-            std::cout << "Enter the student's age " << i + 1 << ": ";
-            cin >> age;
-            std::cin.ignore();
-
-            std::string dateStr;
-            std::cout << "Enter the date of birth for student " << i + 1 << " (dd.mm.yyyy): ";
-            std::getline(std::cin, dateStr);
-            std::cin.ignore();
-
-            string phoneNumber;
-            std::cout << "Enter the phoneNumber of student " << i + 1 << ": ";
-            std::getline(std::cin, phoneNumber);
-            std::cin.ignore();
-
-            Date dateOfBirth;
-            dateOfBirth.parseDate(dateStr);
-
-            studentsTwo.emplace_back(name, surname, age, dateOfBirth, phoneNumber);
-
-            system("cls");
-        }
-
-        for (size_t i = 0; i < studentsTwo.size(); ++i) {
-            std::cout << "Student " << i + 1 << ":\n";
-            std::cout << "Name: " << studentsTwo[i].getName() << "\n";
-            std::cout << "Name: " << studentsTwo[i].getSurname() << "\n";
-            std::cout << "Name: " << studentsTwo[i].getAge() << "\n";
-            std::cout << "Date Of Birth: " << studentsTwo[i].getDateOfBirth().getDate() << "\n";
-
-            std::cout << "\n\n";
-        }
-    }
-
-    void task2() {
-        Dot dot;
-
-        int x, y, z;
-        std::cout << "Enter value X: ";
-        std::cin >> x;
-        
-        std::cout << "\n";
-
-        std::cout << "Enter value Y: ";
-        std::cin >> y;
-
-        std::cout << "\n";
-
-        std::cout << "Enter value Z: ";
-        std::cin >> z;
-
-        dot.setX(x);
-        dot.setY(y);
-        dot.setZ(z);
-
-        dot.saveFile();
-    }
-
-    void task3() {
-        NNTName n;
-        n.SetValueOne(5);
-        n.SetValueTwo(10);
-
-        std::cout << n.MaxValue();
-    }
-    void task4() {
-        Group groupStudent;
-        groupStudent.Menu();
-
-    }
-    void task5() {
-        Array newArray(10);
-        newArray.Random();
-        newArray.PrintArray();
-    }
-    void task6() {
-        Counter counter;
-        counter.CounterManager();
-    }
-    void task7() {
-        Store store;
-        Room room(73);
-
-        store.AddWallpapper("Glass", 623);
-        room.SelectedWallpaper(store, "Glass");
-        int costGlass = room.GetCostOfGluing();
-        std::cout << "Glass Wallpapper = " << costGlass << std::endl;
-
-        store.AddWallpapper("Wood", 345);
-        room.SelectedWallpaper(store, "Wood");
-        int costWood = room.GetCostOfGluing();
-        std::cout << "Wood Wallpapper = " << costWood << std::endl;
-
-
-        store.AddWallpapper("Metal", 1000);
-        room.SelectedWallpaper(store, "Metal");
-        int costMetal = room.GetCostOfGluing();
-        std::cout << "Metal Wallpapper = " << costMetal << std::endl;
-    }
-};
 
 class Figure {
 public:
@@ -764,13 +603,75 @@ private:
     }
 };
 
+class Task {
+public:
+    void TaskDot() {
+        Dot dot;
+
+        int x, y, z;
+        std::cout << "Enter value X: ";
+        std::cin >> x;
+
+        std::cout << "\n";
+
+        std::cout << "Enter value Y: ";
+        std::cin >> y;
+
+        std::cout << "\n";
+
+        std::cout << "Enter value Z: ";
+        std::cin >> z;
+
+        dot.setX(x);
+        dot.setY(y);
+        dot.setZ(z);
+
+        dot.saveFile();
+    }
+    void TaskNNTName() {
+        NNTName n;
+        n.SetValueOne(5);
+        n.SetValueTwo(10);
+
+        std::cout << n.MaxValue();
+    }
+    void TaskGroup() {
+        Group groupStudent;
+        groupStudent.Menu();
+
+    }
+    void TaskArray() {
+        Array newArray(10);
+        newArray.Random();
+        newArray.PrintArray();
+    }
+    void TaskCounter() {
+        Counter counter;
+        counter.CounterManager();
+    }
+    void TaskWallpapper() {
+        Store store;
+        Room room(73);
+
+        store.AddWallpapper("Glass", 623);
+        room.SelectedWallpaper(store, "Glass");
+        int costGlass = room.GetCostOfGluing();
+        std::cout << "Glass Wallpapper = " << costGlass << std::endl;
+
+        store.AddWallpapper("Wood", 345);
+        room.SelectedWallpaper(store, "Wood");
+        int costWood = room.GetCostOfGluing();
+        std::cout << "Wood Wallpapper = " << costWood << std::endl;
+
+
+        store.AddWallpapper("Metal", 1000);
+        room.SelectedWallpaper(store, "Metal");
+        int costMetal = room.GetCostOfGluing();
+        std::cout << "Metal Wallpapper = " << costMetal << std::endl;
+    }
+};
+
 int main() {
     Task task;
-    //task.task1();
-    //task.task2();
-    //task.task3();
-    //task.task5();
-    //task.task6();
-    //task.task7();
 }
 
