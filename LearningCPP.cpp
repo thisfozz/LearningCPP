@@ -5,6 +5,7 @@
 #include <fstream>
 #include <map>
 #include <ctime>
+#include <cstring>
 
 using namespace std;
 
@@ -271,57 +272,6 @@ private:
     }
 protected:
     std::vector<Student> groupStudents;
-};
-
-class Array {
-private:
-    int index;
-    int* _currentArray;
-    int _size;
-
-public:
-    Array(const int& size)  {
-        _size = size;
-        index = 0;
-        _currentArray = new int[_size];
-        for (int i = 0; i < size; i++)
-        {
-            _currentArray[i] = {};
-        }
-    }
-    void SetValue(const int& value) {
-        _currentArray[index] = value;
-        index++;
-    }
-    void Random() {
-        srand(time(NULL));
-        for (int i = 0; i < _size; i++)
-        {
-            _currentArray[i] = 1 + rand() % 10;
-        }
-    }
-
-    void PrintArray() {
-        for (int i = 0; i < _size; i++)
-        {
-            cout << _currentArray[i] << endl;
-        }
-    }
-
-    void Scramble() {
-        for (int i = 0; i < _size; i++)
-        {
-            _currentArray[0 + rand() % _size - 1] = _currentArray[i];
-        }
-    }
-
-    int ArraySize() {
-        return _size;
-    }
-
-    void ClearArrayMemory() {
-        delete[] _currentArray;
-    }
 };
 
 class Elevator {
@@ -669,6 +619,145 @@ public:
     }
 };
 
+class _String {
+private:
+    char *_text;
+
+    int getSize(const std::string text) {
+        return text.size();
+    }
+public:
+    _String() {
+        _text = new char[81];
+    }
+    _String(const size_t countSymbol) {
+        _text = new char[countSymbol+1];
+    }
+    _String(const std::string& text) {
+        int size = text.size();
+        _text = new char[size + 1];
+        text.copy(_text, size);
+        _text[size] = '\0';
+    }
+
+    _String(const _String& otherString) {
+        delete[] _text;
+
+        std::string textdat = otherString._text;
+
+        int size = getSize(otherString._text);
+        _text = new char[size + 1];
+        textdat.copy(_text, size);
+        _text[size] = '\0';
+    }
+
+    void setText(const std::string& text) {
+        delete[] _text;
+
+        int size = text.size();
+        _text = new char[size + 1];
+        text.copy(_text, size);
+        _text[size] = '\0';
+    }
+
+    std::string getText() {
+        return _text;
+    }
+    ~_String() {
+        delete[] _text;
+    }
+};
+
+class Array {
+private:
+    int* _currentArray;
+    int _size;
+
+    int GenerateRandomNumber() {
+        std::srand(static_cast<unsigned int>(std::time(nullptr)));
+        int random_number = std::rand() % 6 + 5;
+        return random_number;
+    }
+
+public:
+    Array(const int& size) :_size(size)
+    {
+        _currentArray = new int[_size];
+        for (int i = 0; i < size; i++)
+        {
+            _currentArray[i] = GenerateRandomNumber();
+        }
+    }
+    Array() {}
+
+    Array(const Array& otherArray) : _size(otherArray._size) {
+        _currentArray = new int[_size];
+        for (int i = 0; i < _size; i++)
+        {
+            _currentArray[i] = otherArray._currentArray[i];
+        }
+    }
+
+    void ChangeSize(const int& size) {
+        int* _tmpArray = _currentArray;
+        _currentArray = new int[size];
+
+        for (int i = 0; i < size; i++)
+        {
+            _currentArray[i] = _tmpArray[i];
+        }
+
+        delete[] _tmpArray;
+        _size = size;
+    }
+
+    void PrintArray() {
+        if (_size <= 0) return;
+        for (size_t i = 0; i < _size; ++i) {
+            std::cout << _currentArray[i] << " ";
+        }
+    }
+    void Sort()
+    {
+        if (_size <= 0) return;
+        for (int i = 1; i < _size; i++)
+        {
+            int j = i - 1;
+            while (j >= 0 && _currentArray[j] > _currentArray[j + 1])
+            {
+                swap(_currentArray[j], _currentArray[j + 1]);
+                j--;
+            }
+        }
+    }
+
+    int FindMax() {
+        if (_size <= 0) return -1;
+        int max = _currentArray[0];
+        for (size_t i = 1; i < _size; ++i) {
+            if (_currentArray[i] > max) {
+                max = _currentArray[i];
+            }
+        }
+        return max;
+    }
+
+    int FindMin() {
+        if (_size <= 0) return -1;
+        int min = _currentArray[0];
+        for (size_t i = 1; i < _size; ++i) {
+            if (_currentArray[i] < min) {
+                min = _currentArray[i];
+            }
+        }
+        return min;
+    }
+
+    ~Array() {
+        delete[] _currentArray;
+    }
+};
+
 class Task {
 public:
     void TaskDot() {
@@ -705,11 +794,6 @@ public:
         Group groupStudent;
         groupStudent.Menu();
 
-    }
-    void TaskArray() {
-        Array newArray(10);
-        newArray.Random();
-        newArray.PrintArray();
     }
     void TaskCounter() {
         Counter counter;
