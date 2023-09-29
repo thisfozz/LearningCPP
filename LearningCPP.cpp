@@ -603,6 +603,72 @@ private:
     }
 };
 
+class Integer {
+private:
+    int value;
+public:
+
+    Integer(int value) : value(value){}
+
+    //CTOR copy
+    Integer(const Integer& other) {
+        this->value = other.value;
+    }
+
+    //Operation
+    Integer operator + (const Integer& other) const {
+        return Integer{ value + other.value };
+    }
+    Integer operator - (const Integer& other) const {
+        return Integer{ value - other.value };
+    }
+    Integer operator * (const Integer& other) const {
+        return Integer{ value * other.value };
+    }
+    Integer operator / (const Integer& other) const {
+        if (other.value == 0) {
+            return NULL;
+        }
+        return Integer{ value / other.value };
+    }
+
+    //Logic operation
+    bool operator == (const Integer& other) const {
+        return value == other.value;
+    }
+    bool operator != (const Integer& other) const {
+        return value != other.value;
+    }
+    bool operator > (const Integer& other) const {
+        return value > other.value;
+    }
+    bool operator < (const Integer& other) const {
+        return value < other.value;
+    }
+
+    //Assignment
+    Integer& operator = (const Integer& other) {
+        value = other.value;
+        return *this;
+    }
+    Integer& operator += (const Integer& other) {
+        value += other.value;
+        return *this;
+    }
+
+    //Prefix ++ and on nValue
+    Integer operator ++ () const
+    {
+        value + 1;
+        return *this;
+    }
+    Integer operator += (int value)
+    {
+        this->value + value;
+        return *this;
+    }
+};
+
 class Task {
 public:
     void TaskDot() {
