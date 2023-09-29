@@ -4,6 +4,7 @@
 #include <sstream>
 #include <fstream>
 #include <map>
+#include <ctime>
 
 using namespace std;
 
@@ -470,7 +471,106 @@ private:
         std::cout << "Value = " << _counter << std::endl;
     }
 };
+class WallpaperRollType {
+private:
+    string wallpaperType;
+    int costWallpaper;
+    int onsquares;
 
+    int GenerateRandomNumber() {
+        std::srand(static_cast<unsigned int>(std::time(nullptr)));
+        int random_number = std::rand() % 6 + 5;
+        return random_number;
+    }
+public:
+    WallpaperRollType(){}
+
+    WallpaperRollType(const std::string& type, int cost)
+        : wallpaperType(type), costWallpaper(cost), onsquares(GenerateRandomNumber()) {}
+
+    void SetWallpapperType(const std::string& wallpaperType) {
+        this->wallpaperType = wallpaperType;
+    }
+    std::string GetWallpaperType() const { return wallpaperType; }
+
+    void setCostWallpaper(const int costWallpapper) {
+        this->costWallpaper = costWallpaper;
+    }
+    int GetCostWallpaper() const { return costWallpaper; }
+
+    int GetOnSquares() const { return onsquares; }
+
+    bool IsValid() const {
+        return !wallpaperType.empty() && costWallpaper >= 0;
+    }
+};
+class WallpapperRoll {
+protected:
+    std::map<string, int> wallpaperRolls;
+public:
+    void AddWallpaperRoll(const WallpaperRollType& roll) {
+        wallpaperRolls[roll.GetWallpaperType()] = roll.GetCostWallpaper();
+    }
+    int GetCostByWallpaperType(const std::string& type) const {
+        auto it = wallpaperRolls.find(type);
+        if (it != wallpaperRolls.end()) {
+            return it->second;
+        }
+        return -1;
+    }
+};
+class Store {
+private:
+    std::map<string, WallpaperRollType> availableWallpapers;
+public:
+    void AddWallpapper(const std::string& type, const int cost) {
+        if (availableWallpapers.find(type) == availableWallpapers.end()) {
+            availableWallpapers[type] = WallpaperRollType(type, cost);
+        }
+        else {
+            std::cout << "Such wallpapers are already in the collection" << std::endl;
+        }
+    }
+    WallpaperRollType BuyWallpapper(const std::string& type) {
+        auto it = availableWallpapers.find(type);
+        if (it != availableWallpapers.end()) {
+            return it->second;
+        }
+        else {
+            return WallpaperRollType("0", 0);
+        }
+    }
+};
+class Room {
+private:
+    WallpaperRollType selectedWallpaper;
+    int squares;
+public:
+    Room(){}
+    Room(const int squares) :squares(squares) {};
+
+    void SelectedWallpaper(Store& store, const std::string& type) {
+        selectedWallpaper = store.BuyWallpapper(type);
+    }
+
+    int GetCostOfGluing() {
+        if (selectedWallpaper.GetWallpaperType() != "") {
+            return selectedWallpaper.GetCostWallpaper() * squares;
+        }
+        return -1;
+    }
+};
+class Flat {
+private:
+    Room room;
+    int countRoom;
+public:
+    Flat(const int countRoom) :countRoom(countRoom) {}
+
+    int getAllCostOfGluing() {
+        return getAllCostOfGluing() * countRoom;
+    }
+};
 class Task {
 public:
     void task1() {
@@ -569,8 +669,100 @@ public:
         Counter counter;
         counter.CounterManager();
     }
+    void task7() {
+        Store store;
+        Room room(73);
+
+        store.AddWallpapper("Glass", 623);
+        room.SelectedWallpaper(store, "Glass");
+        int costGlass = room.GetCostOfGluing();
+        std::cout << "Glass Wallpapper = " << costGlass << std::endl;
+
+        store.AddWallpapper("Wood", 345);
+        room.SelectedWallpaper(store, "Wood");
+        int costWood = room.GetCostOfGluing();
+        std::cout << "Wood Wallpapper = " << costWood << std::endl;
+
+
+        store.AddWallpapper("Metal", 1000);
+        room.SelectedWallpaper(store, "Metal");
+        int costMetal = room.GetCostOfGluing();
+        std::cout << "Metal Wallpapper = " << costMetal << std::endl;
+    }
 };
 
+class Figure {
+public:
+    double area;
+
+    virtual double CalculatingArea() = 0;
+
+    virtual ~Figure() {}
+};
+class Square : public Figure{
+public:
+
+    Square(const double& side) : side(side) {}
+
+    int getArea() const {
+        if (area != 0) {
+            return area;
+        }
+        else {
+            return NULL;
+        }
+    }
+    virtual ~Square(){}
+private:
+    double side;
+
+    double CalculatingArea() override {
+        area = std::pow(side, 2);
+    }
+};
+class Triangle : public Figure {
+public:
+    Triangle(const double& a, const double& h) : a(a), h(h) {}
+
+    double getArea() const {
+        if (area != 0) {
+            return area;
+        }
+        else {
+            return NULL;
+        }
+    }
+    virtual ~Triangle() {}
+private:
+    double a;
+    double h;
+
+    double CalculatingArea() override {
+        area = (1 / 2) * a * h;
+    }
+};
+class Rhomb : public Figure {
+public:
+    Rhomb(const double& a, const double& h) : a(a), h(h) {}
+
+    double getArea() const {
+        if (area != 0) {
+            return area;
+        }
+        else {
+            return NULL;
+        }
+    }
+    virtual ~Rhomb() {}
+
+private:
+    double a;
+    double h;
+
+    double CalculatingArea() override {
+        area = std::pow(a, 2) * std::sin(a);
+    }
+};
 
 int main() {
     Task task;
@@ -579,5 +771,6 @@ int main() {
     //task.task3();
     //task.task5();
     //task.task6();
+    //task.task7();
 }
 
