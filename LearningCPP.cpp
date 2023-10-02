@@ -867,9 +867,8 @@ public:
 
         this->hour = timeInSecond / 3600;
         timeInSecond %= 3600;
-        minutes = timeInSecond / 60;
-        timeInSecond %= 60;
-        second = timeInSecond;
+        this->minutes = timeInSecond / 60;
+        this->second = timeInSecond % 60;
     }
     void ChangeMinutes(const int& minutes) {
         long long timeInSecond = this->hour * 3600 + this->minutes * 60 + this->second;
@@ -885,8 +884,43 @@ public:
         this->hour = timeInSecond / 3600;
         timeInSecond %= 3600;
         this->minutes = timeInSecond / 60;
-        timeInSecond %= 60;
-        second = timeInSecond;
+        this->second = timeInSecond % 60;
+    }
+
+    void ChangeTime(const int& hour, const int& minutes, const int& second) {
+        long long timeInSecond = this->hour * 3600 + this->minutes * 60 + this->second;
+        timeInSecond += hour * 3600;
+        timeInSecond += minutes * 60;
+        timeInSecond += second;
+
+        if (timeInSecond < 0) {
+            timeInSecond = 86400 + timeInSecond;
+        }
+        else {
+            timeInSecond %= 86400;
+        }
+
+        this->hour = timeInSecond / 3600;
+        timeInSecond %= 3600;
+        this->minutes = timeInSecond / 60;
+        this->second = timeInSecond % 60;
+
+    }
+    void ChangeTime(const int& second) {
+        long long timeInSecond = this->hour * 3600 + this->minutes * 60 + this->second;
+        timeInSecond += second;
+
+        if (timeInSecond < 0) {
+            timeInSecond = 86400 + timeInSecond;
+        }
+        else {
+            timeInSecond %= 86400;
+        }
+
+        this->hour = timeInSecond / 3600;
+        timeInSecond %= 3600;
+        this->minutes = timeInSecond / 60;
+        this->second = timeInSecond % 60;
     }
     void printTime() {
         std::cout << hour << " : " << minutes << " : " << second << std::endl;
@@ -895,6 +929,222 @@ private:
     int hour;
     int minutes;
     int second;
+};
+
+class REDate {
+private:
+    unsigned short int day;
+    unsigned short int mounth;
+    unsigned int year;
+
+public:
+    REDate() {}
+
+    REDate(const unsigned short int& day, const unsigned short int& mounth, const unsigned int& year)
+        :day(day), mounth(mounth), year(year) {}
+
+    void setDay(const unsigned short int& day) {
+        this->day = day;
+    }
+    unsigned short int getDay() const { return day; }
+
+    void setMounth(const unsigned short int& mounth) {
+        this->mounth = mounth;
+    }
+    unsigned short int getMounth() const { return mounth; }
+
+    void setYear(const unsigned short int& year) {
+        this->year = year;
+    }
+    unsigned short int getYear() const { return year; }
+
+    std::string ToString() const {
+        std::cout << day << "." << mounth << "." << year << std::endl;
+    }
+};
+
+class RETimne {
+private:
+    REDate date;
+    unsigned short int hour;
+    unsigned short int minutes;
+    unsigned short int second;
+};
+
+class Author {
+private:
+    std::string name;
+    std::string surname;
+public:
+    Author(const std::string& name, const std::string& surname) : name(name), surname(surname) {}
+
+    void setName(const std::string& name) {
+        if (name == this->name) {
+            return;
+        }
+        this->name = name;
+    }
+    std::string getName() const { return name; }
+
+    void setSurname(const std::string& surname) {
+        if (surname == this->surname) {
+            return;
+        }
+        this->name = name;
+    }
+    std::string getSurname() const { return surname; }
+};
+class Publishing {
+private:
+    std::string title;
+public:
+    Publishing(const std::string& title) : title(title) {}
+
+    void setTtitle(const std::string& title) {
+        if (title == this->title) {
+            return;
+        }
+        this->title = title;
+    }
+    std::string getTtile() const { return title; }
+};
+
+class Book {
+private:
+    Author author;
+    Publishing publishing;
+    std::string titleBook;
+    unsigned int yearRelease;
+    unsigned int countInstances;
+    unsigned int countPages;
+public:
+    Book(const std::string& name, 
+        const std::string& surname, 
+        const std::string& title, 
+        const std::string& titleBook,
+        const unsigned int& yearRelease,
+        unsigned int& countInstances,
+        unsigned int& countPages)
+        :author(name,surname), publishing(title), titleBook(titleBook), yearRelease(yearRelease), countInstances(countInstances), countPages(countPages)
+    {}
+
+    void changeNameAuthor(const std::string& name) {
+        author.setName(name);
+    }
+    std::string getNameAuthor() {
+        return author.getName();
+    }
+
+    void changeSurnameAuthor(const std::string& surname) {
+        author.setSurname(surname);
+    }
+    std::string getSurnameAuthor() {
+        return author.getSurname();
+    }
+
+    void changePublishing(const std::string publishing) {
+        this->publishing.setTtitle(publishing);
+    }
+    std::string getPublishing() { return publishing.getTtile(); }
+
+    void setTitleBook(const std::string& titleBook) {
+        if (titleBook == this->titleBook) {
+            return;
+        }
+        this->titleBook = titleBook;
+    }
+    std::string getTitleBook() { return titleBook; }
+
+    void setYearRelease(const unsigned int& yearRelease) {
+        if (yearRelease == this->yearRelease) {
+            return;
+        }
+        this->yearRelease = yearRelease;
+    }
+    unsigned int getYearRelease() { return yearRelease; }
+
+    void setCountInstances(const unsigned int& countInstances) {
+        if (countInstances == this->countInstances) {
+            return;
+        }
+        this->countInstances = countInstances;
+    }
+    unsigned int getCountInstances() { return countInstances; }
+
+    void setCountPage(const unsigned int& countPages) {
+        if (countPages == this->countPages) {
+            return;
+        }
+        this->countPages = countPages;
+    }
+    unsigned int getCountPage() { return countPages; }
+
+
+    void printBook() {
+        std::cout
+            << "Author name: " << author.getName() << std::endl
+            << "Author Surname: " << author.getSurname() << std::endl
+            << "Publishing Title: " << publishing.getTtile() << std::endl
+            << "Title Book: " << titleBook << std::endl
+            << "Year Release Book: " << yearRelease << std::endl
+            << "Count Instances: " << countInstances << std::endl
+            << "Count Pages: " << countPages;
+    }
+};
+
+class Books {
+private:
+    std::vector<Book> books;
+public:
+    void AddBook(Book book) {
+        books.emplace_back(book);
+    }
+    void RemoveBook(Book book) {
+        auto it = std::find(books.begin(), books.end(), book);
+
+        if (it != books.end()) {
+            books.erase(it);
+        }
+    }
+    void PrintBookSpecificAuthor(const std::string& author) {
+        std::vector<Book> booksSpecificAuthor;
+
+        for (size_t i = 0; i < books.size(); ++i) {
+            if (books[i].getNameAuthor() == author) {
+                booksSpecificAuthor.emplace_back(books[i]);
+            }
+        }
+
+        for (size_t i = 0; i < booksSpecificAuthor.size(); ++i) {
+            booksSpecificAuthor[i].printBook();
+        }
+    }
+
+    void PrintBookSpecificPublishing(const std::string publishing) {
+        std::vector<Book> booksSpecificPublishing;
+        for (size_t i = 0; i < books.size(); ++i) {
+            if (books[i].getPublishing() == publishing) {
+                booksSpecificPublishing.emplace_back(books[i]);
+            }
+        }
+
+        for (size_t i = 0; i < booksSpecificPublishing.size(); ++i) {
+            booksSpecificPublishing[i].printBook();
+        }
+    }
+    void PrintScpecificYearBook(const unsigned int& yearRelease) {
+        std::vector<Book> booksSpecificYear;
+
+        for (size_t i = 0; i < books.size(); ++i) {
+            if (books[i].getYearRelease() > yearRelease) {
+                booksSpecificYear.emplace_back(books[i]);
+            }
+        }
+
+        for (size_t i = 0; i < booksSpecificYear.size(); ++i) {
+            booksSpecificYear[i].printBook();
+        }
+    }
 };
 
 class Task {
@@ -960,10 +1210,14 @@ public:
     }
     void TaskTime() {
         MTime time;
-        time.setTime(13, 44, 34);
+        time.setTime(13, 45, 34);
         time.printTime();
         time.ChangeHour(5);
         time.ChangeMinutes(15);
+        time.printTime();
+        time.ChangeTime(2, 2, 2);
+        time.printTime();
+        time.ChangeTime(23562);
         time.printTime();
     }
 };
