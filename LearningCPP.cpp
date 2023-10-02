@@ -963,7 +963,7 @@ public:
     }
 };
 
-class RETimne {
+class RETimne { // To be Continued
 private:
     REDate date;
     unsigned short int hour;
@@ -1008,7 +1008,6 @@ public:
     }
     std::string getTtile() const { return title; }
 };
-
 class Book {
 private:
     Author author;
@@ -1088,10 +1087,9 @@ public:
             << "Title Book: " << titleBook << std::endl
             << "Year Release Book: " << yearRelease << std::endl
             << "Count Instances: " << countInstances << std::endl
-            << "Count Pages: " << countPages;
+            << "Count Pages: " << countPages << std::endl;
     }
 };
-
 class Books {
 private:
     std::vector<Book> books;
@@ -1117,6 +1115,7 @@ public:
 
         for (size_t i = 0; i < booksSpecificAuthor.size(); ++i) {
             booksSpecificAuthor[i].printBook();
+            std::cout << std::endl;
         }
     }
 
@@ -1130,6 +1129,7 @@ public:
 
         for (size_t i = 0; i < booksSpecificPublishing.size(); ++i) {
             booksSpecificPublishing[i].printBook();
+            std::cout << std::endl;
         }
     }
     void PrintScpecificYearBook(const unsigned int& yearRelease) {
@@ -1143,6 +1143,7 @@ public:
 
         for (size_t i = 0; i < booksSpecificYear.size(); ++i) {
             booksSpecificYear[i].printBook();
+            std::cout << std::endl;
         }
     }
 };
@@ -1223,6 +1224,4 @@ public:
 };
 int main() {
     Task task;
-    task.TaskTime();
 }
-
