@@ -758,6 +758,145 @@ public:
     }
 };
 
+class _Triangle {
+public:
+    _Triangle(): area(0), perimeter(0), pointmeridian(0) {}
+
+    _Triangle(const double& a, const double& b, const double& c)
+        :a(a), b(b), c(c), area(0), perimeter(0), pointmeridian(0)
+    {}
+
+public:
+    double calculateArea() {
+        if (a > 0 && b > 0 && c > 0) {
+            double s = (a + b + c) / 2.0;
+            area = sqrt(s * (s - a) * (s - b) * (s - c));
+            return area;
+        }
+        else {
+            return -1;
+        }
+    }
+    double CalculatingPerimeter() {
+        if (a > 0 && b > 0 && c > 0) {
+            perimeter = a + b + c;
+            return perimeter;
+        }
+        else return -1;
+    }
+    double meridianIntersectionPoint() {
+        if (a > 0 && b > 0 && c > 0) {
+            double x = (b * b + c * c - a * a) / (2 * (b * b + c * c));
+            double y = sqrt(1 - x * x) * b;
+            pointmeridian = x * a / 2.0;
+            return pointmeridian;
+        }
+        else {
+            return -1;
+        }
+    }
+    double getSideA() {
+        return a;
+    }
+    double getSideB() {
+        return b;
+    }
+    double getSideC() {
+        return c;
+    }
+private:
+    double a;
+    double b;
+    double c;
+    double area;
+    double perimeter;
+    double pointmeridian;
+};
+
+class MTime {
+public:
+    MTime() :hour(0), minutes(0), second(0) {}
+
+    MTime(const int& hour, const int& minutes, const int& second)
+        :hour(hour), minutes(minutes), second(second) {}
+
+    void SetHour(const int& hour) {
+        if (hour < 0 || hour > 24) {
+            throw invalid_argument("Hour < 0 OR > 24");
+        }
+        this->hour = hour;
+    }
+    void SetMinutes(const int& minutes) {
+        if (minutes < 0 || minutes > 60) {
+            throw invalid_argument("Minutes < 0 OR > 60");;
+        }
+        this->minutes = minutes;
+    }
+    void SetSecond(const int& second) {
+        if (second < 0 || second > 60) {
+            throw invalid_argument("Second < 0 OR > 60");;;
+        }
+        this->second = second;
+    }
+    void setTime(const int& hour, const int& minutes, const int& second) {
+        this->hour = hour;
+        this->minutes = minutes;
+        this->second = second;
+    }
+
+    int getHour() {
+        return hour;
+    }
+    int getMinutes() {
+        return minutes;
+    }
+    int getSecond() {
+        return second;
+    }
+
+    void ChangeHour(const int& hour) {
+        long long timeInSecond = this->hour * 3600 + this->minutes * 60 + this->second;
+        timeInSecond += hour * 3600;
+
+        if (timeInSecond < 0) {
+            timeInSecond = 86400 + timeInSecond;
+        }
+        else {
+            timeInSecond %= 86400;
+        }
+
+        this->hour = timeInSecond / 3600;
+        timeInSecond %= 3600;
+        minutes = timeInSecond / 60;
+        timeInSecond %= 60;
+        second = timeInSecond;
+    }
+    void ChangeMinutes(const int& minutes) {
+        long long timeInSecond = this->hour * 3600 + this->minutes * 60 + this->second;
+        timeInSecond += minutes * 60;
+
+        if (timeInSecond < 0) {
+            timeInSecond = 86400 + timeInSecond;
+        }
+        else {
+            timeInSecond %= 86400;
+        }
+
+        this->hour = timeInSecond / 3600;
+        timeInSecond %= 3600;
+        this->minutes = timeInSecond / 60;
+        timeInSecond %= 60;
+        second = timeInSecond;
+    }
+    void printTime() {
+        std::cout << hour << " : " << minutes << " : " << second << std::endl;
+    }
+private:
+    int hour;
+    int minutes;
+    int second;
+};
+
 class Task {
 public:
     void TaskDot() {
@@ -819,9 +958,17 @@ public:
         int costMetal = room.GetCostOfGluing();
         std::cout << "Metal Wallpapper = " << costMetal << std::endl;
     }
+    void TaskTime() {
+        MTime time;
+        time.setTime(13, 44, 34);
+        time.printTime();
+        time.ChangeHour(5);
+        time.ChangeMinutes(15);
+        time.printTime();
+    }
 };
-
 int main() {
     Task task;
+    task.TaskTime();
 }
 
