@@ -993,6 +993,10 @@ public:
         this->name = name;
     }
     std::string getSurname() const { return surname; }
+
+    bool operator==(const Author& other) const {
+        return (name == other.name && surname == other.surname);
+    }
 };
 class Publishing {
 private:
@@ -1007,6 +1011,10 @@ public:
         this->title = title;
     }
     std::string getTtile() const { return title; }
+
+    bool operator==(const Publishing& other) const {
+        return title == other.title;
+    }
 };
 class Book {
 private:
@@ -1089,6 +1097,14 @@ public:
             << "Count Instances: " << countInstances << std::endl
             << "Count Pages: " << countPages << std::endl;
     }
+    bool operator==(const Book& other) const {
+        return (author == other.author &&
+            publishing == other.publishing &&
+            titleBook == other.titleBook &&
+            yearRelease == other.yearRelease &&
+            countInstances == other.countInstances &&
+            countPages == other.countPages);
+    }
 };
 class Books {
 private:
@@ -1147,6 +1163,8 @@ public:
         }
     }
 };
+
+
 
 class Task {
 public:
@@ -1223,5 +1241,5 @@ public:
     }
 };
 int main() {
-    Task task;
+
 }
