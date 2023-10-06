@@ -965,7 +965,6 @@ public:
 
 class RETimne { // To be Continued
 private:
-    REDate date;
     unsigned short int hour;
     unsigned short int minutes;
     unsigned short int second;
@@ -1164,7 +1163,52 @@ public:
     }
 };
 
+class User {
+public:
+    User(){}
+    User(const std::string& name, const std::string& surname) : name(name), surname(surname) {}
 
+    void setName(const std::string& name) {
+        this->name = name;
+    }
+    std::string getName() { return name; }
+
+    void setSurname(const std::string& surname) {
+        this->surname = surname;
+    }
+    bool operator == (const User& other) {
+        return name == other.name;
+    }
+private:
+    std::string name;
+    std::string surname;
+};
+class Phone {
+private:
+    std::string phoneNumber;
+public:
+    Phone() {}
+    Phone(const std::string& phoneNumber)  : phoneNumber(phoneNumber) {}
+    void setNumberPhone(const std::string& phoneNumber) {
+        this->phoneNumber = phoneNumber;
+    }
+    std::string getPhone() { return phoneNumber; }
+};
+
+class PhoneBook {
+private:
+    std::map<User, Phone> phoneBook;
+public:
+    void addContact(const User& user, const Phone& phone) {
+        //Добавление заказа
+    }
+    std::map<User, Phone> SearchContact(const User& user) {
+        //Поиск контакта
+    }
+    void PrintContact(std::map<User, Phone>) {
+        //Отображение контакнта
+    }
+};
 
 class Task {
 public:
@@ -1240,6 +1284,144 @@ public:
         time.printTime();
     }
 };
+
+class _People {
+private:
+    std::string name;
+    std::string surname;
+    std::string patronymic;
+public:
+    _People(const std::string& name, const std::string& surname, const std::string& patronymic) : name(name), surname(surname), patronymic(patronymic) {}
+
+    void setName(const std::string& name) {
+        if (name == this->name) {
+            return;
+        }
+        this->name = name;
+    }
+    std::string getName() const { return name; }
+
+    void setSurname(const std::string& surname) {
+        if (surname == this->surname) {
+            return;
+        }
+        this->name = name;
+    }
+    std::string getSurname() const { return surname; }
+
+    void setPatronymic(const std::string& patronymic) {
+        if (patronymic == this->patronymic) {
+            return;
+        }
+        this->patronymic = patronymic;
+    }
+    std::string getPatronymic() const { return patronymic; }
+
+    bool operator==(const _People& other) const {
+        return (name == other.name &&
+            surname == other.surname &&
+            patronymic == other.patronymic);
+    }
+};
+
+class Worker {
+private:
+    _People people;
+    std::string post;
+    unsigned short yearAdmissionWork;
+    unsigned int salary;
+
+public:
+    Worker(const std::string& name, 
+        const std::string& surname, 
+        const std::string& patronymic,
+        const std::string& post, 
+        unsigned short& yearAdmissionWork,
+        unsigned int& salary)
+        :people(name,surname, patronymic), 
+        post(post), 
+        yearAdmissionWork(0), 
+        salary(salary) {}
+
+    void ChangeName(const std::string& name) {
+        people.setName(name);
+    }
+    std::string getName() const { return people.getName(); }
+
+    void ChangeSurnmae(const std::string& surname) {
+        people.setName(surname);
+    }
+    std::string getSurname() const { return people.getSurname(); }
+
+    void ChangePatronymic(const std::string& patronymic) {
+        people.setPatronymic(patronymic);
+    }
+    std::string getPatronymic() const { return people.getPatronymic(); }
+
+    void ChangePost(Worker& worker, const std::string& post) {
+        worker.post = post;
+    }
+
+    std::string GetPost() const { return post; }
+
+    void PrintWorker() const  {
+        std::cout << "FIO worker: " << people.getName() << " " << people.getSurname() << " " << people.getPatronymic() << std::endl;
+        std::cout << "Post worker: " << post << std::endl;
+        std::cout << "The year of the employee's admission to work: " << yearAdmissionWork << std::endl;
+        std::cout << "Employee's salary: " << std::endl;
+    }
+    void ChangeYearAdmissionWork(Worker& worker, unsigned short yearUP) {
+        worker.yearAdmissionWork = yearUP;
+    }
+    unsigned short GetYearAdmissionWork() { return yearAdmissionWork; }
+
+    void ChangeSalary(Worker& worker, unsigned short salaryUP) {
+        worker.salary = salaryUP;
+    }
+    unsigned int GettSalary() { return salary; }
+};
+class Workers {
+private:
+    std::vector<Worker> workers;
+
+public:
+    void AddWorker(Worker worker) {
+        workers.emplace_back(worker);
+    }
+
+    void RemoveWorker(Worker worker) {
+        auto it = std::find(workers.begin(), workers.end(), worker);
+
+        if (it != workers.end()) {
+            workers.erase(it);
+        }
+    }
+
+    void PrintWorkerWorkExperience(const unsigned short& experience) {
+        for (auto worker : workers) {
+            if (worker.GetYearAdmissionWork() > experience) {
+                worker.PrintWorker();
+            }
+        }
+    }
+
+    void PrintWorkerSalaryExceeds(const unsigned int& salary) {
+        for (auto worker : workers) {
+            if (worker.GetYearAdmissionWork() > salary) {
+                worker.PrintWorker();
+            }
+        }
+    }
+
+    void PrintHoldingPosition(const std::string& post) {
+        for (auto worker : workers) {
+            if (worker.GetPost() == post) {
+                worker.PrintWorker();
+            }
+        }
+    }
+};
+
 int main() {
 
 }
